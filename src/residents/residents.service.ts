@@ -3,15 +3,23 @@ import { RiakService } from '../riak/riak.service';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateResidentDto } from './dto/create-resident.dto';
 import { UpdateResidentDto } from './dto/update-resident.dto';
+import { RoomsService } from 'src/rooms/rooms.service';
 
 const BUCKET = 'residents';
 const INDEX_KEY = '_index_residents';
 
 @Injectable()
 export class ResidentsService {
-  constructor(private readonly riak: RiakService) {}
+  constructor(
+    private readonly riak: RiakService,
+    private readonly roomsService: RoomsService,
+  ) {}
 
   async create(dto: CreateResidentDto) {
+    const room = await this.roomsService.findOne(dto.roomId);
+    if (!room) {
+      throw new NotFoundException(`Room ${dto.roomId} not found`);
+    }
     const id = uuidv4();
     const payload = { id, ...dto, createdAt: new Date().toISOString() };
     await this.riak.put(BUCKET, id, payload);
@@ -21,7 +29,9 @@ export class ResidentsService {
 
   async findAll() {
     const ids = await this.riak.listFromIndex(BUCKET, INDEX_KEY);
-    const results = await Promise.all(ids.map((id) => this.riak.get(BUCKET, id)));
+    const results = await Promise.all(
+      ids.map((id) => this.riak.get(BUCKET, id)),
+    );
     return results.filter(Boolean);
   }
 

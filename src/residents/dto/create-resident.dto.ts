@@ -9,5 +9,5 @@ export class CreateResidentDto {
   @ApiProperty()
   @IsDefined()
   @IsUUID()
-  roomId: string; 
+  roomId: string;
 }
