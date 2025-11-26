@@ -39,4 +39,9 @@ export class ResidentsController {
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
+
+  @Get('room/:roomId')
+  findByRoom(@Param('roomId') roomId: string) {
+    return this.service.findByRoom(roomId);
+  }
 }

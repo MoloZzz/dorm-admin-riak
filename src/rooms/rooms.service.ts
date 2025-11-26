@@ -54,4 +54,9 @@ export class RoomsService {
     await this.riak.removeFromIndex(BUCKET, INDEX_KEY, id);
     return { deleted: true };
   }
+
+  async findByDormitory(dormitoryId: string) {
+    const rooms = await this.findAll();
+    return rooms.filter((room) => room.dormitoryId === dormitoryId);
+}
 }
