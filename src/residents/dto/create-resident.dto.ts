@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsNumber, IsUUID } from 'class-validator';
+import { IsString, IsUUID, IsDefined } from 'class-validator';
 
 export class CreateResidentDto {
   @ApiProperty()
@@ -7,7 +7,7 @@ export class CreateResidentDto {
   name: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsDefined()
   @IsUUID()
-  roomId?: string; 
+  roomId: string; 
 }

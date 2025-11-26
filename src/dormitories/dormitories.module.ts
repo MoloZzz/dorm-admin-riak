@@ -7,5 +7,6 @@ import { RiakModule } from 'src/riak/riak.module';
   imports: [RiakModule],
   providers: [DormitoriesService],
   controllers: [DormitoriesController],
+  exports: [DormitoriesService],
 })
 export class DormitoriesModule {}

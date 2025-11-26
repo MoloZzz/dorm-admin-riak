@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsUUID } from 'class-validator';
+import { IsString, IsUUID, IsDefined } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateRoomDto {
@@ -7,7 +7,7 @@ export class CreateRoomDto {
   name: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsDefined()
   @IsUUID()
-  dormitoryId?: string;
+  dormitoryId: string;
 }
