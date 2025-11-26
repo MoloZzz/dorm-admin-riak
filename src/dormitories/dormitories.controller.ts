@@ -10,7 +10,9 @@ import {
 import { DormitoriesService } from './dormitories.service';
 import { CreateDormDto } from './dto/create-dorm.dto';
 import { UpdateDormDto } from './dto/update-dorm.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Dormitories')
 @Controller('dormitories')
 export class DormitoriesController {
   constructor(private readonly service: DormitoriesService) {}
