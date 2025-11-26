@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateRoomDto } from './create-room.dto';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString, IsOptional, IsNumber } from "class-validator";
 
-export class UpdateRoomDto extends PartialType(CreateRoomDto) {}
+
+export class UpdateRoomDto {
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  dormitoryId?: string;
+}

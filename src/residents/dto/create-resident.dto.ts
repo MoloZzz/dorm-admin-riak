@@ -1,16 +1,13 @@
-import { IsString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsNumber, IsUUID } from 'class-validator';
 
 export class CreateResidentDto {
   @ApiProperty()
   @IsString()
-  roomId: string;
+  name: string;
 
   @ApiProperty()
-  @IsString()
-  fullName: string;
-
-  @ApiProperty()
-  @IsNumber()
-  age: number;
+  @IsOptional()
+  @IsUUID()
+  roomId?: string; 
 }

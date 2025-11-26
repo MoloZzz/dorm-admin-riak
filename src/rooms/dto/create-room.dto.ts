@@ -1,16 +1,13 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsUUID } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateRoomDto {
   @ApiProperty()
   @IsString()
-  dormitoryId: string;
+  name: string;
 
   @ApiProperty()
-  @IsString()
-  number: string;
-
-  @ApiProperty()
-  @IsNumber()
-  capacity: number;
+  @IsOptional()
+  @IsUUID()
+  dormitoryId?: string;
 }

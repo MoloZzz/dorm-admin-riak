@@ -68,11 +68,9 @@ export class RiakService implements OnModuleInit, OnModuleDestroy {
   async put(bucket: string, key: unknown, value: any): Promise<void> {
     this.ensureConnected();
     const keyStr = this.toKey(key);
-    const storeVal = {
-      bucket,
-      key: keyStr,
-      value: JSON.stringify(value)
-    };
+    const storeVal = { bucket, key: keyStr, value: JSON.stringify(value) };
+
+    this.logger.log(`PUT ${bucket}/${keyStr} => ${JSON.stringify(value)}`);
 
     await new Promise<void>((resolve, reject) => {
       this.client.storeValue(storeVal, (err) =>
@@ -84,6 +82,8 @@ export class RiakService implements OnModuleInit, OnModuleDestroy {
   async get<T = any>(bucket: string, key: unknown): Promise<T | null> {
     this.ensureConnected();
     const keyStr = this.toKey(key);
+
+    this.logger.log(`GET ${bucket}/${keyStr}`);
 
     return new Promise<T | null>((resolve, reject) => {
       this.client.fetchValue({ bucket, key: keyStr }, (err, result) => {

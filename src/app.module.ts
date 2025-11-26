@@ -8,7 +8,13 @@ import { ResidentsModule } from './residents/residents.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal: true}), RiakModule, DormitoriesModule, RoomsModule, ResidentsModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    RiakModule,
+    DormitoriesModule,
+    RoomsModule,
+    ResidentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
