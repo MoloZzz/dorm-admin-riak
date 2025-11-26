@@ -58,5 +58,5 @@ export class RoomsService {
   async findByDormitory(dormitoryId: string) {
     const rooms = await this.findAll();
     return rooms.filter((room) => room.dormitoryId === dormitoryId);
-}
+  }
 }
