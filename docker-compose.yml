@@ -1,0 +1,35 @@
+services:
+  riak:
+    image: basho/riak-kv:latest
+    container_name: riak-1
+    ports:
+      - "8087:8087" # Protocol Buffers для NestJS
+      - "8098:8098" # HTTP API для тестів через curl
+    environment:
+      RIAK_USER: riak-1
+      RIAK_PASSWORD: riak-1
+    healthcheck:
+      test: ["CMD", "riak-admin", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - riak_data:/var/lib/riak
+
+  app:
+    build: .
+    container_name: dorm-admin
+    ports:
+      - "3000:3000"
+    environment:
+      RIAK_NODES: riak-1:8087
+    depends_on:
+      riak:
+        condition: service_healthy
+    command: npm run start:dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+volumes:
+  riak_data:

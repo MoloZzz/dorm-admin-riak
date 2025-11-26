@@ -76,3 +76,21 @@ Bucket name: residents
   age: number;
 }
 ```
+
+## Варіант через докер компус
+Riak:
+- Піднімається офіційний образ basho/riak-kv.
+- Порти 8087 (для Node.js client) та 8098 (HTTP API).
+- Є healthcheck, щоб NestJS не стартував, поки база не готова.
+- Дані зберігаються у volume riak_data.
+
+NestJS (app):
+- Будується з локального Dockerfile.
+- depends_on з condition: service_healthy гарантує, що сервіс чекає Riak.
+- Змінна RIAK_NODES=riak:8087 передається в NestJS через ConfigService.
+- Монтується код локально (.:/usr/src/app) для hot reload при dev.
+
+Команда для старту:
+```
+docker-compose up --build
+```
